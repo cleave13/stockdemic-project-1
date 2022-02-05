@@ -1,7 +1,7 @@
 // Establish variables
-var apiKey = 'DVNcrtS4FS68E1LAklJ6h7MWq7aEdRbLXehTvdG8'
-var yahooUrl = 'https://yfapi.net/v8/finance/spark?interval=1d&range=1mo&symbols=AAPL&appid=' + apiKey
-var covidUrl = 'https://covid-api.mmediagroup.fr/v1/history?country=US&status=confirmed'
+var apiKey = 'DVNcrtS4FS68E1LAklJ6h7MWq7aEdRbLXehTvdG8';
+var yahooUrl = 'https://yfapi.net/v8/finance/spark?interval=1d&range=1mo&symbols=AAPL&appid=' + apiKey;
+var covidUrl = 'https://covid-api.mmediagroup.fr/v1/history?country=US&status=confirmed';
 
 // Call on our APIs
 fetch(yahooUrl, {
@@ -33,7 +33,10 @@ fetch(covidUrl, {
 
 
 // Save fetched data to local storage
-
+function saveLocal() {
+    localStorage.setItem('Price', price);
+    localStorage.setItem('Cases', cases);
+}
 
 // Populate certain data to respective areas of page
 
