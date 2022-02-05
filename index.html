@@ -4,9 +4,72 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <link rel="stylesheet" href="style.css"/>
     <title>Stockdemic</title>
 </head>
+
 <body>
-    
+    <!-- Flexbox for title -->
+    <header class="title-flex-container">
+        <div class="title">
+            <h1>STOCKDEMIC</h1>
+            <h3>The answer to how the pandemic affects your stock prices!</h3>
+        </div>
+    </header>
+
+    <!-- Flexbox for start date and end date -->
+    <section class="date-flex-container">
+        <div class="start-date">
+            <label for="start">Start Date:</label>
+            <input type="date" id="Start" name="data-start"
+                   value="2019-11-19"
+                   min="2019-11-19" max="2022-12-31">          
+        </div>
+        <div class="end-date">
+            <label for="end">End Date:</label>
+            <input type="date" id="End" name="data-end"
+                   value="2022-02-04"
+                   min="2019-11-19" max="2022-12-31">
+        </div>
+    </section>
+
+    <!-- Flexbox containing Pandemic Information -->
+    <section class="pandemic-stock-flex">
+        <section class="pandemic-flex-box">
+            <div class="pandemic-info">
+                <h3>Pandemic Infromation</h3>
+            </div>
+        </section>
+    <!-- Flexbox containing the Stock Information -->
+        <section class="stock-flex-box">
+            <div class="stock-info">
+                <h3>Your Stock Information</h3> 
+            </div>
+        </section>
+    </section>
+
+    <section class="graph-flex-box">
+        <div class="comparison-graph">
+            <h3>This graph compares the stock prices to the pandemic cases per day</h3>
+        </div>
+    </section>
+
+    <section class="email-container">
+        <h3>Enter e-mail to receive information directly</h3>
+        <form class="email"> 
+            <div>Email</div>
+                <input class="contact-container-input" type="text" placeholder="e-mail">
+            <button class= "contact-form-button">Submit</button>
+        </form>  
+    </section>
+<br>
+<br>
+<br>
+
+    <footer>
+        <div class="credit">Created By Team Awesome</div>
+    </footer>
+
+    <script src='./assetts/app.js'></script>
 </body>
 </html>
