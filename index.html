@@ -13,6 +13,7 @@
     <header class="title-flex-container">
         <div class="title">
             <h1>STOCKDEMIC</h1>
+            <h2 id='current-time'></h2>
             <h3>The answer to how the pandemic affects your stock prices!</h3>
         </div>
     </header>
@@ -58,7 +59,7 @@
         <h3>Enter e-mail to receive information directly</h3>
         <form class="email"> 
             <div>Email</div>
-                <input class="contact-container-input" type="text" placeholder="e-mail">
+                <input class="contact-container-input" type="text" placeholder="e-mail" id='email-input'>
             <button class= "contact-form-button">Submit</button>
         </form>  
     </section>
@@ -69,7 +70,9 @@
     <footer>
         <div class="credit">Created By Team Awesome</div>
     </footer>
-
+    
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
     <script src='./assetts/app.js'></script>
+    
 </body>
 </html>
