@@ -1,10 +1,15 @@
 * {
-    font-family: sans-serif;
+    font-family: cursive;
 }
 
 body {
+    
     margin: 0;
     padding: 0;
+}
+
+$body-font-family {
+    font-family: 'Inter', cursive;
 }
 
 header {
@@ -16,7 +21,6 @@ header {
 .title {
     display: flex;
     flex-direction: column;
-    font-family: sans-serif;
     box-shadow: steelblue;
     background-color: rgb(238, 250, 255);
     margin-bottom: 2%;
@@ -32,7 +36,7 @@ header {
 
 label {
     display: block;
-    font: 1rem 'Fira Sans', sans-serif;
+    font: 1rem;
 }
 
 input,
