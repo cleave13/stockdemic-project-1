@@ -46,12 +46,6 @@ function updateTime () {
     myTime=setTimeout('displayTime()', refresh);
 }
 
-function displayTime() {
-    var currentTime = dayjs();
-    timeDisplay.textContent = currentTime;
-    updateTime();
-}
-
 displayTime();
 
 
@@ -66,6 +60,11 @@ function saveEndDate() {
 
 // (optional) Use moment to display current time
 
+function displayTime() {
+    var currentTime = dayjs();
+    timeDisplay.textContent = currentTime;
+    updateTime();
+}
 
 // Save fetched data to local storage
 
@@ -77,7 +76,9 @@ function saveEndDate() {
 
 
 // Make data points readable in graph form
-
+function displayGraph() {
+    
+}
 
 // Create reactive calender to input selected time range
 
