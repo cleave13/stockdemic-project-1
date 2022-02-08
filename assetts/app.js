@@ -50,12 +50,6 @@ function updateTime () {
     myTime=setTimeout('displayTime()', refresh);
 }
 
-function displayTime() {
-    var currentTime = dayjs();
-    timeDisplay.textContent = currentTime;
-    updateTime();
-}
-
 displayTime();
 
 
@@ -70,6 +64,11 @@ function saveEndDate() {
 
 
 
+function displayTime() {
+    var currentTime = dayjs();
+    timeDisplay.textContent = currentTime;
+    updateTime();
+}
 
 // Save fetched data to local storage
 
@@ -81,7 +80,34 @@ function saveEndDate() {
 
 
 // Make data points readable in graph form
+function setSmapleChart() {
+    
+}
 
+function renderSampleChart(stockData) {
+        
+        const labels = stockData.AAPL.close;
+    
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'AAPL Financial Data',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+      };
+    
+      const config = {
+        type: 'line',
+        data: data,
+        options: {}
+      };
+        const myChart = new Chart(
+            document.getElementById('stock-chart'),
+            config
+          );
+}
 
 // Create reactive calender to input selected time range
 
@@ -94,3 +120,7 @@ startDateInput.onchange = function () {
 endDateInput.onchange = function () {
     saveEndDate();
 }
+
+// Logic
+
+renderSampleChart();
