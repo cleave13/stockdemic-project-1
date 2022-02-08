@@ -9,26 +9,37 @@ var stockData = document.querySelector('.stock-info');
 var graph = document.querySelector('.comparison-graph');
 var emailInput = document.getElementById('email-input');
 var timeDisplay = document.getElementById('current-time');
+var stockInput  = document.getElementById('search-input');
+var searchBtn = document.getElementById('search-btn');
 // API keys/URLs
-var finApiKey = 'DVNcrtS4FS68E1LAklJ6h7MWq7aEdRbLXehTvdG8'
+var finApiKey = 'UZNMbYCqMtdpiMdEBePJKpAgA3sj26Ww'
 var covApiKey = 'af7c694b68c14befb5deb6e06062d2ec'
-var yahooUrl = 'https://yfapi.net/v8/finance/spark?interval=1d&range=1mo&symbols=AAPL&appid=' + finApiKey
+//var yahooUrl = 'https://yfapi.net/v8/finance/spark?interval=1d&range=2yr&symbols=AAPL&appid='
+var finUrl = 'https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/2020-06-01/2020-06-17?apiKey=' + finApiKey
 var covidUrl = 'https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey=' + covApiKey
 //var covidUrl = 'https://covid-api.mmediagroup.fr/v1/history?country=US&status=confirmed'
 
+// change ticker from user input
+
+function getUrl() {
+    var ticker = stockInput.value
+    var start = startDateInput.value
+    var end = endDateInput.value
+    var finUrl = 'https://api.polygon.io/v2/aggs/ticker/' + ticker + '/range/1/day/' + start + '/' + end + '?apiKey=' + finApiKey
+    
+
 // Call on our APIs
- fetch(yahooUrl, {
+ fetch(finUrl, {
      method: 'GET',
      mode: 'cors', 
-     headers: {
-       'x-api-key': 'DVNcrtS4FS68E1LAklJ6h7MWq7aEdRbLXehTvdG8'
-     },
    }).then(function (response) {
        if (response.ok) {
            return response.json()
        }
    }).then(function (data) {
        console.log(data)
+       renderSampleChart(data)
+       console.log(data.results[0].c)
    })
 
  fetch(covidUrl, {
@@ -41,6 +52,7 @@ var covidUrl = 'https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey
  }).then(function (data) {
      console.log(data)
  })
+}
 
 
 // Use dayjs to display current time
@@ -70,6 +82,10 @@ function displayTime() {
     updateTime();
 }
 
+
+
+
+
 // Save fetched data to local storage
 
 
@@ -80,13 +96,11 @@ function displayTime() {
 
 
 // Make data points readable in graph form
-function setSmapleChart() {
-    
-}
+
 
 function renderSampleChart(stockData) {
         
-        const labels = stockData.AAPL.close;
+    const labels = stockData
     
       const data = {
         labels: labels,
@@ -94,7 +108,7 @@ function renderSampleChart(stockData) {
           label: 'AAPL Financial Data',
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
-          data: [0, 10, 5, 2, 20, 30, 45],
+          data: stockData.results[0].c
         }]
       };
     
@@ -103,10 +117,10 @@ function renderSampleChart(stockData) {
         data: data,
         options: {}
       };
-        const myChart = new Chart(
-            document.getElementById('stock-chart'),
-            config
-          );
+      const newChart = new Chart(
+        document.getElementById('stock-chart'),
+        config
+        );
 }
 
 // Create reactive calender to input selected time range
@@ -121,6 +135,10 @@ endDateInput.onchange = function () {
     saveEndDate();
 }
 
+searchBtn.addEventListener('click', function () {
+    getUrl();
+    renderSampleChart();
+})
 // Logic
 
-renderSampleChart();
+
