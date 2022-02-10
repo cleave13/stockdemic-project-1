@@ -134,21 +134,27 @@ function renderStockChart(stockData) {
         data: data
       })
     };
-
+console.log(startDateInput.value)
 function renderCovidChart(covidData) {
     console.log(covidData);
     var ctx = document.getElementById('pandemic-chart').getContext('2d');
-    const covidLabels = []
+    const covidLabels = [];
     const covidArray = [];
-    
-    const filteredTimeSeries = covidData.actualsTimeseries.slice(0,5);
-    console.log(filteredTimeSeries)
+    // if index of parent = -1 inside of loop has data.ats[i] within each have another loop at the [j](find and compare date)
+    // if it matches grab data.ats[i][j].newCases
+    startDateString = startDateInput.value; 
+    endDateString = endDateInput.value; 
+    const startIndex = covidData.actualsTimeseries.findIndex(item => item.date === startDateString);
+    const endIndex = covidData.actualsTimeseries.findIndex(item => item.date === endDateString) + 1;
+    console.log(startIndex, endIndex);
+    const timeRange = covidData.actualsTimeseries.slice(startIndex, endIndex);
+    console.log(timeRange);
     
     // Create new Date instance
     var date = new Date(startDateInput.value)
 
-    for (let i = 0; i < filteredTimeSeries.length; i++) {
-        const covidTime = filteredTimeSeries[i];
+    for (let i = 0; i < timeRange.length; i++) {
+        const covidTime = timeRange[i];
         
         // Add a day
         date.setDate(date.getDate() + 1);
