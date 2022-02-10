@@ -8,9 +8,6 @@ body {
     padding: 0;
 }
 
-$body-font-family {
-    font-family: 'Inter', cursive;
-}
 
 header {
     width: 100%;
@@ -86,4 +83,8 @@ label {
     flex-direction: row;
     justify-content: center;
    
+}
+
+.alert {
+    width: 100%;
 }
