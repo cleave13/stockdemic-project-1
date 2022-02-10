@@ -19,7 +19,7 @@ var finUrl = 'https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/2020-06-01/
 var covidUrl = 'https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey=' + covApiKey
 //var covidUrl = 'https://covid-api.mmediagroup.fr/v1/history?country=US&status=confirmed'
 
-// change ticker from user input
+// change ticker and range from user input
 
 function getUrl() {
     var ticker = stockInput.value
@@ -77,7 +77,7 @@ function saveEndDate() {
 
 
 function displayTime() {
-    var currentTime = dayjs();
+    var currentTime = dayjs().format('DD/MM/YYYY hh:mm:ss');
     timeDisplay.textContent = currentTime;
     updateTime();
 }
@@ -99,29 +99,24 @@ function displayTime() {
 
 
 function renderSampleChart(stockData) {
-        
-    const labels = stockData
-    
-      const data = {
+    console.log(stockData.results);
+    var ctx = document.getElementById('stock-chart').getContext('2d');
+    const labels = [1, 2, 3, 4, 5]
+    var data = {
         labels: labels,
         datasets: [{
-          label: 'AAPL Financial Data',
+          label: stockInput.value,
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
-          data: stockData.results[0].c
+          data: [stockData.results[0].c, stockData.results[1].c, stockData.results[2].c, stockData.results[3].c, stockData.results[4].c]
         }]
-      };
-    
-      const config = {
+    }
+    var stockChart = new Chart(ctx, {
         type: 'line',
-        data: data,
-        options: {}
-      };
-      const newChart = new Chart(
-        document.getElementById('stock-chart'),
-        config
-        );
-}
+        data: data
+      })
+    };
+
 
 // Create reactive calender to input selected time range
 
