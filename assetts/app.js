@@ -7,7 +7,6 @@ var endDateInput = document.getElementById('end');
 var caseNum = document.querySelector('.pandemic-info');
 var stockData = document.querySelector('.stock-info');
 var graph = document.querySelector('.comparison-graph');
-var emailInput = document.getElementById('email-input');
 var timeDisplay = document.getElementById('current-time');
 var stockInput  = document.getElementById('search-input');
 var searchBtn = document.getElementById('search-btn');
@@ -38,7 +37,7 @@ function getUrl() {
        }
    }).then(function (data) {
        console.log(data)
-       renderSampleChart(data)
+       renderStockChart(data)
        console.log(data.results[0].c)
    })
 
@@ -51,6 +50,7 @@ function getUrl() {
      }
  }).then(function (data) {
      console.log(data)
+     renderCovidChart(data)
  })
 }
 
@@ -98,17 +98,35 @@ function displayTime() {
 // Make data points readable in graph form
 
 
-function renderSampleChart(stockData) {
+function renderStockChart(stockData) {
     console.log(stockData.results);
     var ctx = document.getElementById('stock-chart').getContext('2d');
-    const labels = [1, 2, 3, 4, 5]
+    const stockLabels = []
+    const stockArray = []
+
+    // Create new Date instance
+    var date = new Date(startDateInput.value)
+
+    for (let i = 0; i < stockData.results.length; i++) {
+        const stockResult = stockData.results[i];
+        
+        // Add a day
+        date.setDate(date.getDate() + 1);
+        stockLabels.push(date.toLocaleDateString(("en-US"),{day:"numeric", month:"short"}));
+        stockArray.push(stockResult.c);
+        // if (fri) { <-- Need to leverage Day.js library to get day of week
+        //     stockArray.push(stockResult.c);
+        //     stockArray.push(stockResult.c);
+        // }
+    }
+
     var data = {
-        labels: labels,
+        labels: stockLabels,
         datasets: [{
           label: stockInput.value,
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
-          data: [stockData.results[0].c, stockData.results[1].c, stockData.results[2].c, stockData.results[3].c, stockData.results[4].c]
+          data: stockArray
         }]
     }
     var stockChart = new Chart(ctx, {
@@ -116,6 +134,42 @@ function renderSampleChart(stockData) {
         data: data
       })
     };
+
+function renderCovidChart(covidData) {
+    console.log(covidData);
+    var ctx = document.getElementById('pandemic-chart').getContext('2d');
+    const covidLabels = []
+    const covidArray = [];
+    
+    const filteredTimeSeries = covidData.actualsTimeseries.slice(0,5);
+    console.log(filteredTimeSeries)
+    
+    // Create new Date instance
+    var date = new Date(startDateInput.value)
+
+    for (let i = 0; i < filteredTimeSeries.length; i++) {
+        const covidTime = filteredTimeSeries[i];
+        
+        // Add a day
+        date.setDate(date.getDate() + 1);
+        covidLabels.push(date.toLocaleDateString(("en-US"),{day:"numeric", month:"short"}));
+        covidArray.push(covidTime.newCases);
+    }
+
+    var data = {
+        labels: covidLabels,
+        datasets: [{
+          label: "New Cases",
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: covidArray
+        }]
+    }
+    var stockChart = new Chart(ctx, {
+        type: 'bar',
+        data: data
+      })
+};
 
 
 // Create reactive calender to input selected time range
@@ -132,7 +186,6 @@ endDateInput.onchange = function () {
 
 searchBtn.addEventListener('click', function () {
     getUrl();
-    renderSampleChart();
 })
 // Logic
 
