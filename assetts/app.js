@@ -140,6 +140,9 @@ function renderCovidChart(covidData) {
     var ctx = document.getElementById('pandemic-chart').getContext('2d');
     const covidLabels = []
     const covidArray = [];
+    const dateString = "2021-02-21";
+    const index = covidData.actualsTimeseries.findIndex(item => item.date === dateString);
+    console.log(`Index of ${dateString}: ${index}`)
     
     const filteredTimeSeries = covidData.actualsTimeseries.slice(0,5);
     console.log(filteredTimeSeries)
