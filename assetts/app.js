@@ -21,9 +21,9 @@ var covidUrl = 'https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey
 // change ticker and range from user input
 
 function getUrl() {
-    var ticker = stockInput.value
-    var start = startDateInput.value
-    var end = endDateInput.value
+    var ticker = stockInput.value;
+    var start = startDateInput.value;
+    var end = endDateInput.value;
     var finUrl = 'https://api.polygon.io/v2/aggs/ticker/' + ticker + '/range/1/day/' + start + '/' + end + '?apiKey=' + finApiKey
     
 
@@ -99,25 +99,42 @@ function displayTime() {
 
 
 function renderStockChart(stockData) {
-    console.log(stockData.results);
-    var ctx = document.getElementById('stock-chart').getContext('2d');
-    const stockLabels = []
-    const stockArray = []
+    // console.log(stockData.results);
+    let ctx = document.getElementById('stock-chart').getContext('2d');
+    const stockLabels = [];
+    const stockArray = [];
+    var startDate = dayjs(startDateInput.value);
+    var endDate = dayjs(endDateInput.value);
+    var totalDays = endDate.diff(startDate, 'day') + 1;
+    console.log(startDate, endDate, totalDays);
 
     // Create new Date instance
-    var date = new Date(startDateInput.value)
+    let date = new Date(startDateInput.value);
+    let dayCounter = 0;
 
     for (let i = 0; i < stockData.results.length; i++) {
         const stockResult = stockData.results[i];
-        
+        console.log(i);
+        console.log(stockData.results.length);
         // Add a day
         date.setDate(date.getDate() + 1);
         stockLabels.push(date.toLocaleDateString(("en-US"),{day:"numeric", month:"short"}));
         stockArray.push(stockResult.c);
-        // if (fri) { <-- Need to leverage Day.js library to get day of week
-        //     stockArray.push(stockResult.c);
-        //     stockArray.push(stockResult.c);
-        // }
+        console.log(date.getDay());
+        dayCounter++
+
+        if (date.getDay() === 5 || (i === stockData.results.length - 1 && dayCounter < totalDays)) {
+            console.log('--- Enters loop ---');
+            while (date.getDay() !== 0 && dayCounter < totalDays) {
+                console.log(`date.getDay(): ${date.getDay()} - dayCounter: ${dayCounter} - totalDays: ${totalDays}`);
+                stockArray.push(stockResult.c);
+                date.setDate(date.getDate() + 1);
+                stockLabels.push(date.toLocaleDateString(("en-US"),{day:"numeric", month:"short"}));
+                dayCounter++
+            }
+        console.log('--- Exits loop ---');
+        }
+        console.log('dayCounter:' + dayCounter);
     }
 
     var data = {
