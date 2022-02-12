@@ -25,7 +25,7 @@ var finApiKey = 'UZNMbYCqMtdpiMdEBePJKpAgA3sj26Ww';
 var covApiKey = 'af7c694b68c14befb5deb6e06062d2ec';
 
 //Define API endpoints and paths
-var finRootUrl = 'https://api.polygon.io/v2/aggs/ticker' + finApiKey;
+var finUrl = 'https://api.polygon.io/v2/aggs/ticker/SPY/range/1/day/' + finApiKey;
 var covidUrl = 'https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey=' + covApiKey;
 
 // change ticker and range from user input
@@ -34,7 +34,7 @@ function getUrl() {
     var ticker = stockInput.value;
     var start = startDateInput.value;
     var end = endDateInput.value;
-    var finUrl = finRootUrl + ticker + '/range/1/day/' + start + '/' + end + '?apiKey=' + finApiKey;
+    var finUrl = 'https://api.polygon.io/v2/aggs/ticker/' + ticker + '/range/1/day/' + start + '/' + end + '?apiKey=' + finApiKey;
 
     // Call on our APIs
     fetch(finUrl, {
