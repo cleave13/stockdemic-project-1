@@ -8,6 +8,9 @@
     <!-- Compressed CSS file for Foundation framework -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.4/dist/css/foundation.min.css"
         crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&family=Merriweather:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css" />
     <title>Stockdemic</title>
 </head>
@@ -16,11 +19,18 @@
     <!-- Flexbox for title -->
     <header class="title-flex-container">
         <div class="title">
-            <h1>STOCKDEMIC</h1>
+            <h1><strong>STOCKDEMIC</strong></h1>
             <h2 id='current-time'></h2>
             <h3>The answer to how the pandemic affects your stock prices!</h3>
         </div>
     </header>
+    <ul class="menu sector-search">
+        <li class="sector-list"><button class="clear button" id="sp-btn" href="#">S&P</button></li>
+        <li class="sector-list"><button class="clear button" id="healthcare-btn" href="#">Healthcare</button></li>
+        <li class="sector-list"><button class="clear button" id="energy-btn" href="#">Energy</button></li>
+        <li class="sector-list"><button class="clear button" id="financials-btn" href="#">Financials</button></li>
+        <li class="sector-list"><button class="clear button" id="estate-btn" href="#">Real Estate</button></li>
+      </ul>
 
     <!-- Flexbox for start date and end date -->
     <section class="date-flex-container">
@@ -40,7 +50,7 @@
     </section>
     <section class="graph-flex-box">
         <div class="comparison-graph">
-            <h3>This graph compares the stock prices to the pandemic cases per day</h3>
+            <h3>These graphs compare the stock prices to COVID cases per day</h3>
             <div class="grid-x">
                 <div clas="cell fluid small-6 medium-6 large-6">
                     <div class="card">
