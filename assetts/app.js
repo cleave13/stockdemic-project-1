@@ -10,6 +10,13 @@ var graph = document.querySelector('.comparison-graph');
 var timeDisplay = document.getElementById('current-time');
 var stockInput  = document.getElementById('search-input');
 var searchBtn = document.getElementById('search-btn');
+var spBtn = document.getElementById('sp-btn');
+var healthBtn = document.getElementById('healthcare-btn');
+var energyBtn = document.getElementById('energy-btn');
+var finBtn = document.getElementById('financials-btn');
+var estateBtn = document.getElementById('estate-btn');
+var covidChart;
+var stockChart;
 // API keys/URLs
 var finApiKey = 'UZNMbYCqMtdpiMdEBePJKpAgA3sj26Ww'
 var covApiKey = 'af7c694b68c14befb5deb6e06062d2ec'
@@ -53,7 +60,179 @@ function getUrl() {
      renderCovidChart(data)
  })
 }
+// if S&P button is pressed fetch info from ETF SPY
+function getSpUrl() {
+    stockInput.value = 'SPY';
+    var start = startDateInput.value;
+    var end = endDateInput.value;
+    var finUrl = 'https://api.polygon.io/v2/aggs/ticker/SPY/range/1/day/' + start + '/' + end + '?apiKey=' + finApiKey
+    
 
+// Call on our APIs
+ fetch(finUrl, {
+     method: 'GET',
+     mode: 'cors', 
+   }).then(function (response) {
+       if (response.ok) {
+           return response.json()
+       }
+   }).then(function (data) {
+       console.log(data)
+       renderStockChart(data)
+       console.log(data.results[0].c)
+   })
+
+ fetch(covidUrl, {
+     method: 'GET',
+     mode: 'cors',
+ }).then(function (response) {
+     if (response.ok) {
+         return response.json()
+     }
+ }).then(function (data) {
+     console.log(data)
+     renderCovidChart(data)
+ })
+}
+// If healthcare button is pressed fetch data from ETF XBI
+function getHealthUrl() {
+    stockInput.value = 'XBI';
+    var start = startDateInput.value;
+    var end = endDateInput.value;
+    var finUrl = 'https://api.polygon.io/v2/aggs/ticker/XBI/range/1/day/' + start + '/' + end + '?apiKey=' + finApiKey
+    
+
+// Call on our APIs
+ fetch(finUrl, {
+     method: 'GET',
+     mode: 'cors', 
+   }).then(function (response) {
+       if (response.ok) {
+           return response.json()
+       }
+   }).then(function (data) {
+       console.log(data)
+       renderStockChart(data)
+       console.log(data.results[0].c)
+   })
+
+ fetch(covidUrl, {
+     method: 'GET',
+     mode: 'cors',
+ }).then(function (response) {
+     if (response.ok) {
+         return response.json()
+     }
+ }).then(function (data) {
+     console.log(data)
+     renderCovidChart(data)
+ })
+}
+
+// If energy button is pressed fetch data from ETF PXE
+function getEnergyUrl() {
+    stockInput.value = 'PXE';
+    var start = startDateInput.value;
+    var end = endDateInput.value;
+    var finUrl = 'https://api.polygon.io/v2/aggs/ticker/PXE/range/1/day/' + start + '/' + end + '?apiKey=' + finApiKey
+    
+
+// Call on our APIs
+ fetch(finUrl, {
+     method: 'GET',
+     mode: 'cors', 
+   }).then(function (response) {
+       if (response.ok) {
+           return response.json()
+       }
+   }).then(function (data) {
+       console.log(data)
+       renderStockChart(data)
+       console.log(data.results[0].c)
+   })
+
+ fetch(covidUrl, {
+     method: 'GET',
+     mode: 'cors',
+ }).then(function (response) {
+     if (response.ok) {
+         return response.json()
+     }
+ }).then(function (data) {
+     console.log(data)
+     renderCovidChart(data)
+ })
+}
+
+// If financials button is pressed fetch data from ETF
+function getFinUrl() {
+    stockInput.value = 'VFH';
+    var start = startDateInput.value;
+    var end = endDateInput.value;
+    var finUrl = 'https://api.polygon.io/v2/aggs/ticker/VFH/range/1/day/' + start + '/' + end + '?apiKey=' + finApiKey
+    
+
+// Call on our APIs
+ fetch(finUrl, {
+     method: 'GET',
+     mode: 'cors', 
+   }).then(function (response) {
+       if (response.ok) {
+           return response.json()
+       }
+   }).then(function (data) {
+       console.log(data)
+       renderStockChart(data)
+       console.log(data.results[0].c)
+   })
+
+ fetch(covidUrl, {
+     method: 'GET',
+     mode: 'cors',
+ }).then(function (response) {
+     if (response.ok) {
+         return response.json()
+     }
+ }).then(function (data) {
+     console.log(data)
+     renderCovidChart(data)
+ })
+}
+
+// If real estate button is pressed fetch data from ETF
+function getEstateUrl() {
+    stockInput.value = 'VNQ';
+    var start = startDateInput.value;
+    var end = endDateInput.value;
+    var finUrl = 'https://api.polygon.io/v2/aggs/ticker/VNQ/range/1/day/' + start + '/' + end + '?apiKey=' + finApiKey
+    
+
+// Call on our APIs
+ fetch(finUrl, {
+     method: 'GET',
+     mode: 'cors', 
+   }).then(function (response) {
+       if (response.ok) {
+           return response.json()
+       }
+   }).then(function (data) {
+       console.log(data)
+       renderStockChart(data)
+       console.log(data.results[0].c)
+   })
+
+ fetch(covidUrl, {
+     method: 'GET',
+     mode: 'cors',
+ }).then(function (response) {
+     if (response.ok) {
+         return response.json()
+     }
+ }).then(function (data) {
+     console.log(data)
+     renderCovidChart(data)
+ })
+}
 
 // Use dayjs to display current time
 // Create functions to update time by the second
@@ -146,7 +325,7 @@ function renderStockChart(stockData) {
           data: stockArray
         }]
     }
-    var stockChart = new Chart(ctx, {
+    stockChart = new Chart(ctx, {
         type: 'line',
         data: data
       })
@@ -188,7 +367,7 @@ function renderCovidChart(covidData) {
           data: covidArray
         }]
     }
-    var stockChart = new Chart(ctx, {
+    covidChart = new Chart(ctx, {
         type: 'bar',
         data: data
       })
@@ -209,6 +388,26 @@ endDateInput.onchange = function () {
 
 searchBtn.addEventListener('click', function () {
     getUrl();
+})
+
+spBtn.addEventListener('click', function() {
+    getSpUrl();
+})
+
+healthBtn.addEventListener('click', function() {
+    getHealthUrl();
+})
+
+energyBtn.addEventListener('click', function() {
+    getEnergyUrl();
+})
+
+finBtn.addEventListener('click', function() {
+    getFinUrl();
+})
+
+estateBtn.addEventListener('click', function() {
+    getEstateUrl();
 })
 // Logic
 
