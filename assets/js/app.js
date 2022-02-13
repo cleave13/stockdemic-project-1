@@ -208,13 +208,14 @@ function getFinUrl() {
     })
 }
 
+// Populates the ticker symbol from the click of a saved stock button
 function setTickerFromButton(event) {
     const target = event.target;
     tickerString = target.getAttribute('data-ticker');
     stockInput.value = tickerString;
 }
 
-//Get saved stocks
+//Get saved stocks from local storage
 function showSavedStocks() {
     const stockList = localStorage.getItem('portfolioStocks');
     if (stockList) {
@@ -233,6 +234,7 @@ function showSavedStocks() {
     return;
 }
 
+// Clears the saved stocks from local storage and refreshes the page when the user clicks the "clear" button
 function clearSavedStocks() {
     localStorage.removeItem('portfolioStocks');
     savedPortfolioEl.innerHTML = '';
@@ -314,10 +316,6 @@ function displayTime() {
     timeDisplay.textContent = currentTime;
     updateTime();
 }
-
-// Show recent searches for easy access
-
-
 
 // Make data points readable in graph form
 function renderStockChart(stockData) {
@@ -472,7 +470,7 @@ addStockBtn.addEventListener('click', function () {
     addStock(stockString);
 });
 
-// Logic
+// Logic - initializes the app when the page is first loaded
 
 $(document).foundation();
 displayTime();
