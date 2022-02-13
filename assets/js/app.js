@@ -15,10 +15,15 @@ var healthBtn = document.getElementById('healthcare-btn');
 var energyBtn = document.getElementById('energy-btn');
 var finBtn = document.getElementById('financials-btn');
 var estateBtn = document.getElementById('estate-btn');
+var savedPortfolioEl = document.getElementById('portfolio-buttons');
+var addStockBtn = document.getElementById('add-btn');
+var clearStockBtn = document.getElementById('clear-btn');
 
-//Declare global variables for both charts
+//Declare global variables for both charts and saved stocks
 var covidChart;
 var stockChart;
+var savedStocks = [];
+var tickerString = '';
 
 // API keys/URLs
 var finApiKey = 'UZNMbYCqMtdpiMdEBePJKpAgA3sj26Ww';
@@ -31,7 +36,7 @@ var covidUrl = 'https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey
 // change ticker and range from user input
 
 function getUrl() {
-    var ticker = stockInput.value;
+    var ticker = stockInput.value.toUpperCase();
     var start = startDateInput.value;
     var end = endDateInput.value;
     var finUrl = 'https://api.polygon.io/v2/aggs/ticker/' + ticker + '/range/1/day/' + start + '/' + end + '?apiKey=' + finApiKey;
@@ -203,6 +208,57 @@ function getFinUrl() {
     })
 }
 
+function setTickerFromButton(event) {
+    const target = event.target;
+    tickerString = target.getAttribute('data-ticker');
+    stockInput.value = tickerString;
+}
+
+//Get saved stocks
+function showSavedStocks() {
+    const stockList = localStorage.getItem('portfolioStocks');
+    if (stockList) {
+        savedStocks = JSON.parse(stockList);
+        savedStocks.forEach(savedStock => {
+            const stockListItem = document.createElement('button');
+            stockListItem.setAttribute('type', 'button');
+            stockListItem.setAttribute('class', 'button');
+            stockListItem.setAttribute('class', 'saved-stock');
+            stockListItem.setAttribute('data-close', '');
+            stockListItem.setAttribute('data-ticker', savedStock);
+            stockListItem.textContent = savedStock;
+            savedPortfolioEl.appendChild(stockListItem);
+        });
+    }
+    return;
+}
+
+function clearSavedStocks() {
+    localStorage.removeItem('portfolioStocks');
+    savedPortfolioEl.innerHTML = '';
+    savedStocks = [];
+    showSavedStocks();
+}
+
+// Save the ticker symbol entered by the user to local storage and display as a button. 
+function addStock(tickerSymbol) {
+    if (JSON.stringify(savedStocks).includes(tickerSymbol)) {
+        return;
+    }
+
+    tickerSymbol = tickerSymbol.toUpperCase();
+    const tickerButtonEl = document.createElement('button');
+    savedStocks.push(tickerSymbol);
+    tickerButtonEl.setAttribute('type', 'button');
+    tickerButtonEl.setAttribute('class', 'button');
+    stockListItem.setAttribute('class', 'saved-stock');
+    tickerButtonEl.setAttribute('data-close', '');
+    tickerButtonEl.setAttribute('data-ticker', tickerSymbol);
+    tickerButtonEl.textContent = tickerSymbol;
+    savedPortfolioEl.appendChild(tickerButtonEl);
+    localStorage.setItem('portfolioStocks', JSON.stringify(savedStocks));
+};
+
 // If real estate button is pressed fetch data from ETF
 function getEstateUrl() {
     stockInput.value = 'VNQ';
@@ -254,26 +310,26 @@ function saveEndDate() {
 }
 
 function displayTime() {
-    var currentTime = dayjs().format('DD/MM/YYYY hh:mm:ss');
+    var currentTime = dayjs().format('MM/DD/YYYY hh:mm:ss');
     timeDisplay.textContent = currentTime;
     updateTime();
 }
 
-
-// Save fetched data to local storage
-
-
-// Populate certain data to respective areas of page
-
-
 // Show recent searches for easy access
 
 
+
 // Make data points readable in graph form
-
-
 function renderStockChart(stockData) {
     let ctx = document.getElementById('stock-chart').getContext('2d');
+    console.log(stockData.resultsCount);
+    if (stockData.resultsCount === 0) {
+        ctx.font = "15px Arial";
+        ctx.fillText("No matching stocks found", 80, 75);
+        return;
+    }
+    
+    
     const stockLabels = [];
     const stockArray = [];
     var startDate = dayjs(startDateInput.value);
@@ -307,13 +363,13 @@ function renderStockChart(stockData) {
     var data = {
         labels: stockLabels,
         datasets: [{
-            label: stockInput.value,
+            label: stockInput.value.toUpperCase(),
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             data: stockArray
         }]
     }
-    stockChart = new Chart(ctx, {
+    window.stockChart = new Chart(ctx, {
         type: 'line',
         data: data
     })
@@ -352,11 +408,21 @@ function renderCovidChart(covidData) {
             data: covidArray
         }]
     }
-    covidChart = new Chart(ctx, {
+    window.covidChart = new Chart(ctx, {
         type: 'bar',
         data: data
     })
 };
+
+// Allows the canvas elements to be reused for multiple charts.
+function clearCharts() {
+    if (window.stockChart instanceof Chart) {
+        window.stockChart.destroy();
+    }
+    if (window.covidChart instanceof Chart) {
+        window.covidChart.destroy();
+    }
+}
 
 // Add event listeners to buttons/submits
 startDateInput.onchange = function () {
@@ -368,29 +434,46 @@ endDateInput.onchange = function () {
 }
 
 searchBtn.addEventListener('click', function () {
+    clearCharts();
     getUrl();
 })
 
 spBtn.addEventListener('click', function () {
+    clearCharts();
     getSpUrl();
 })
 
 healthBtn.addEventListener('click', function () {
+    clearCharts();
     getHealthUrl();
 })
 
 energyBtn.addEventListener('click', function () {
+    clearCharts();
     getEnergyUrl();
 })
 
 finBtn.addEventListener('click', function () {
+    clearCharts();
     getFinUrl();
 })
 
 estateBtn.addEventListener('click', function () {
+    clearCharts();
     getEstateUrl();
 })
 
+savedPortfolioEl.addEventListener('click', setTickerFromButton);
+
+clearStockBtn.addEventListener('click', clearSavedStocks);
+
+addStockBtn.addEventListener('click', function () {
+    stockString = document.getElementById('saved-input').value;
+    addStock(stockString);
+});
+
 // Logic
 
+$(document).foundation();
 displayTime();
+showSavedStocks()
