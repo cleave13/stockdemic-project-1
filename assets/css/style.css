@@ -14,6 +14,14 @@ header {
     background-color: seashell;
 }
 
+h3 {
+    font-size: 1.3rem;
+}
+
+hr {
+    width: 70%;
+}
+
 #current-time{
     font-size: medium;
     font-weight: bold;
@@ -37,6 +45,7 @@ header {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    margin-top: 1%;
 }
 
 label {
@@ -78,19 +87,10 @@ label {
     align-items: center;
 }
 
-.email-container {
-    display: flex;
-    flex-direction: column;
-    border: steelblue;
-    box-shadow: steelblue;
-    align-items: center;
-}
-
 .credit {
     display: flex;
     flex-direction: row;
     justify-content: center;
-   
 }
 
 .alert {
@@ -99,4 +99,33 @@ label {
 
 .grid-x {
     justify-content: space-around;
+}
+
+.saved-stock {
+    margin: 0 0 10px 5px;
+    padding: 10px;
+    color: seashell;
+    background-color: steelblue;
+}
+
+.menu {
+    padding-top: 1%;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.comparison-graph {
+    display: flex;
+    justify-content: space-evenly;
+    width: 70%;
+}
+
+.cell {
+    width: 100%;
+}
+
+#main-menu {
+    width: 100%;
+    background-color: rgb(238, 250, 255);
+    padding-right: 5%;
 }
