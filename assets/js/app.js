@@ -251,7 +251,7 @@ function addStock(tickerSymbol) {
     savedStocks.push(tickerSymbol);
     tickerButtonEl.setAttribute('type', 'button');
     tickerButtonEl.setAttribute('class', 'button');
-    stockListItem.setAttribute('class', 'saved-stock');
+    tickerButtonEl.setAttribute('class', 'saved-stock');
     tickerButtonEl.setAttribute('data-close', '');
     tickerButtonEl.setAttribute('data-ticker', tickerSymbol);
     tickerButtonEl.textContent = tickerSymbol;
