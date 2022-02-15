@@ -15,6 +15,12 @@ The purpose of the app Team Awesome has created is to allow users to compare spe
 <img width="400" alt="Screen Grab3" src=./assets/images/RealEstatePic.png>
 <img width="400" alt="Screen Grab4" src=./assets/images/PortfolioPic.png>
 
+## Technologies Used
+- Our team leveraged the [Polygon finance API](https://polygon.io/stocks?gclid=Cj0KCQiAmKiQBhClARIsAKtSj-lMPklMlg4c3Z4QpGpFS8pU141HabWIqXoP6mIJ8q9vSsT0yKtLH5oaAsjcEALw_wcB) to retrieve our financial data.
+- All of the COVID data was sourced from the [Covid Act Now API](https://covidactnow.org/data-api).
+- We leveraged the [Foundation CSS Framework](https://get.foundation/) for some of the prebuilt modal components and the framework for styling.
+- All of our date manipulation was done using the [Day.js Javascript Library](https://day.js.org/).
+
 ## Web Developer's Contact
 * Team Awesome
 
